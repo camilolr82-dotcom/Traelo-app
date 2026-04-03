@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#080A10"/>
+<title>Traelo — Trae lo que quieras de USA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ============================================================
+   VARIABLES & RESET
+============================================================ */
+:root {
+  --bg:         #080A10;
+  --surface:    #0F1118;
+  --surface2:   #181C27;
+  --surface3:   #21263A;
+  --accent:     #FF6B35;
+  --accent-dim: rgba(255,107,53,0.12);
+  --green:      #00C9A7;
+  --green-dim:  rgba(0,201,167,0.12);
+  --red:        #FF4560;
+  --red-dim:    rgba(255,69,96,0.12);
+  --text:       #EEEEF2;
+  --text-muted: #6B7380;
+  --text-dim:   #3D4255;
+  --border:     rgba(255,255,255,0.07);
+  --radius:     16px;
+  --radius-sm:  10px;
+  --nav-h:      68px;
+  --header-h:   112px;
+  font-family: 'Figtree', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+.header {
+  position: fixed;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  z-index: 100;
+  background: rgba(8,10,16,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 18px 12px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--accent);
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: white;
+  letter-spacing: -1px;
+  flex-shrink: 0;
+}
+
+.logo-name {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+.logo-name span { color: var(--accent); }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.casillero-badge {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  color: var(--green);
+  display: flex; align-items: center; gap: 5px;
+}
+
+.casillero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.icon-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all .2s;
+  font-size: 16px;
+}
+
+.icon-btn:active { transform: scale(0.92); background: var(--surface3); }
+
+/* Search bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input-wrap {
+  flex: 1;
+  position: relative;
+}
+
+.search-input-wrap svg {
+  position: absolute;
+  left: 12px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px 10px 38px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Figtree', sans-serif;
+  outline: none;
+  transition: border-color .2s;
+}
+
+.search-input::placeholder { color: var(--text-muted); }
+.search-input:focus { border-color: var(--accent); }
+
+.agent-trigger-btn {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #ff8c5a);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(255,107,53,0.35);
+  transition: all .2s;
+  font-size: 18px;
+}
+
+.agent-trigger-btn:active { transform: scale(0.92); }
+
+/* ============================================================
+   MAIN CONTENT
+============================================================ */
+.main {
+  padding-top: var(--header-h);
+  padding-bottom: calc(var(--nav-h) + 12px);
+  min-height: 100dvh;
+}
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* ============================================================
+   HOME VIEW
+============================================================ */
+.hero-banner {
+  margin: 18px 18px 0;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #1A1D27 0%, #0F1118 100%);
+  border: 1px solid var(--border);
+  padding: 22px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(255,107,53,0.25);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 10px;
+  letter-spacing: 0.3px;
+}
+
+.hero-title {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.hero-title span { color: var(--accent); }
+
+.hero-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: 0 4px 14px rgba(255,107,53,0.3);
+}
+
+.hero-btn:active { transform: scale(0.96); }
+
+/* Agent alert card */
+.agent-alert {
+  margin: 14px 18px 0;
+  background: linear-gradient(135deg, rgba(0,201,167,0.08), rgba(0,201,167,0.04));
+  border: 1px solid rgba(0,201,167,0.2);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.agent-alert:active { transform: scale(0.98); }
+
+.agent-alert-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--green-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.agent-alert-text strong {
+  display: block;
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 2px;
+}
+
+.agent-alert-text span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.agent-alert-arrow {
+  margin-left: auto;
+  color: var(--green);
+  font-size: 18px;
+}
+
+/* Section titles */
+.section {
+  padding: 20px 18px 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.3px;
+}
+
+.section-link {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Category pills */
+.categories {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+
+.categories::-webkit-scrollbar { display: none; }
+
+.cat-pill {
+  flex-shrink: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 5px;
+}
+
+.cat-pill.active, .cat-pill:active {
+  background: var(--accent-dim);
+  border-color: rgba(255,107,53,0.4);
+  color: var(--accent);
+}
+
+/* Product cards */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 14px 18px 0;
+}
+
+.product-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+}
+
+.product-card:active { transform: scale(0.97); }
+
+.product-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 8px; left: 8px;
+  background: var(--green);
+  color: #080A10;
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+}
+
+.product-badge.red {
+  background: var(--red);
+  color: white;
+}
+
+.product-info {
+  padding: 10px 11px 12px;
+}
+
+.product-name {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-prices {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.price-usa {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.price-col {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.price-saving {
+  font-size: 11px;
+  color: var(--green);
+  font-weight: 600;
+}
+
+/* Trust signals */
+.trust-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 14px 18px 0;
+}
+
+.trust-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+
+.trust-icon {
+  font-size: 24px;
+}
+
+.trust-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  line-height: 1.3;
+  text-align: center;
+}
+
+/* ============================================================
+   AGENT VIEW
+============================================================ */
+.agent-view {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - var(--header-h) - var(--nav-h));
+  padding: 16px 0 0;
+}
+
+.agent-header {
+  padding: 0 18px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.agent-header-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.agent-avatar {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #ff8c5a);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 4px 14px rgba(255,107,53,0.3);
+  flex-shrink: 0;
+}
+
+.agent-info strong {
+  display: block;
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.agent-info span {
+  font-size: 12px;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.agent-info span::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* Quick prompts */
+.quick-prompts {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.quick-prompts::-webkit-scrollbar { display: none; }
+
+.qp-btn {
+  flex-shrink: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+
+.qp-btn:active {
+  background: var(--accent-dim);
+  border-color: rgba(255,107,53,0.4);
+  color: var(--accent);
+}
+
+/* Messages */
+.messages-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface3) transparent;
+}
+
+.msg {
+  max-width: 88%;
+  animation: msg-in .3s ease-out;
+}
+
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.msg.user { align-self: flex-end; }
+.msg.agent { align-self: flex-start; }
+
+.msg-bubble {
+  padding: 11px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.msg.user .msg-bubble {
+  background: var(--accent);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.msg.agent .msg-bubble {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+
+.msg-time {
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+.msg.user .msg-time { text-align: right; }
+
+/* Product result cards in chat */
+.product-result {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-result::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.product-result.vale { border-color: rgba(0,201,167,0.3); }
+.product-result.vale::before { background: var(--green); }
+.product-result.no-vale { border-color: rgba(255,69,96,0.3); }
+.product-result.no-vale::before { background: var(--red); }
+
+.pr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.pr-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  flex: 1;
+}
+
+.pr-verdict {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+  padding: 4px 9px;
+  border-radius: 20px;
+}
+
+.vale .pr-verdict { background: var(--green-dim); color: var(--green); }
+.no-vale .pr-verdict { background: var(--red-dim); color: var(--red); }
+
+.pr-prices {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.pr-price-item {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.pr-price-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.pr-price-val {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pr-price-val.green { color: var(--green); }
+.pr-price-val.accent { color: var(--accent); }
+.pr-price-val.red { color: var(--red); }
+
+.pr-saving-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.vale .pr-saving-row { background: var(--green-dim); }
+.no-vale .pr-saving-row { background: var(--red-dim); }
+
+.pr-saving-label { font-size: 12px; font-weight: 600; }
+.vale .pr-saving-label { color: var(--green); }
+.no-vale .pr-saving-label { color: var(--red); }
+
+.pr-saving-amount {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.vale .pr-saving-amount { color: var(--green); }
+.no-vale .pr-saving-amount { color: var(--red); }
+
+.pr-reason {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.pr-cta {
+  display: flex;
+  gap: 8px;
+}
+
+.pr-btn {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Sora', sans-serif;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+  text-align: center;
+}
+
+.pr-btn.primary {
+  background: var(--accent);
+  color: white;
+}
+
+.pr-btn.secondary {
+  background: var(--surface3);
+  color: var(--text);
+}
+
+.pr-btn:active { transform: scale(0.96); }
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  width: fit-content;
+}
+
+.typing-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: typing-bounce 1.2s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: .2s; }
+.typing-dot:nth-child(3) { animation-delay: .4s; }
+
+@keyframes typing-bounce {
+  0%,60%,100% { transform: translateY(0); opacity: .4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Chat input */
+.chat-input-area {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  flex-shrink: 0;
+}
+
+.chat-input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Figtree', sans-serif;
+  resize: none;
+  outline: none;
+  max-height: 100px;
+  transition: border-color .2s;
+  line-height: 1.4;
+}
+
+.chat-input::placeholder { color: var(--text-muted); }
+.chat-input:focus { border-color: var(--accent); }
+
+.send-btn {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--accent);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .2s;
+  box-shadow: 0 4px 12px rgba(255,107,53,0.3);
+}
+
+.send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.send-btn:not(:disabled):active { transform: scale(0.92); }
+
+/* ============================================================
+   PEDIDOS VIEW
+============================================================ */
+.pedidos-view { padding: 20px 18px 0; }
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  gap: 12px;
+}
+
+.empty-icon { font-size: 52px; opacity: 0.5; }
+
+.empty-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.empty-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 260px;
+}
+
+.empty-btn {
+  margin-top: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.empty-btn:active { transform: scale(0.96); }
+
+/* ============================================================
+   CUENTA VIEW
+============================================================ */
+.cuenta-view { padding: 20px 18px 0; }
+
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.profile-avatar {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent), #ff8c5a);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+}
+
+.profile-info strong {
+  display: block;
+  font-family: 'Sora', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.profile-info span {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.casillero-card {
+  background: linear-gradient(135deg, rgba(0,201,167,0.1), rgba(0,201,167,0.04));
+  border: 1px solid rgba(0,201,167,0.25);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+
+.casillero-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.casillero-code {
+  font-family: 'Sora', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--green);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.casillero-address {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.casillero-address strong {
+  display: block;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 12px;
+  background: var(--surface3);
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.copy-btn:active { transform: scale(0.97); background: var(--green-dim); color: var(--green); }
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.menu-item:active { background: var(--surface2); }
+
+.menu-item-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.menu-item-text {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.menu-item-arrow {
+  color: var(--text-dim);
+  font-size: 16px;
+}
+
+/* ============================================================
+   BOTTOM NAV
+============================================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  height: var(--nav-h);
+  background: rgba(8,10,16,0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  padding: 0 6px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 8px 4px;
+  border-radius: 12px;
+  transition: all .2s;
+  position: relative;
+}
+
+.nav-item:active { background: var(--surface2); }
+
+.nav-icon {
+  font-size: 22px;
+  transition: transform .2s;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color .2s;
+  letter-spacing: 0.2px;
+}
+
+.nav-item.active .nav-label { color: var(--accent); }
+.nav-item.active .nav-icon { transform: scale(1.1); }
+
+.nav-dot {
+  position: absolute;
+  top: 4px; right: 18px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+
+/* Nav active indicator */
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%; transform: translateX(-50%);
+  width: 20px; height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* ============================================================
+   UTILITIES & SCROLLBAR
+============================================================ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+
+.spacer { height: 20px; }
+
+/* ============================================================
+   TOAST
+============================================================ */
+.toast {
+  position: fixed;
+  bottom: calc(var(--nav-h) + 16px);
+  left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 200;
+  opacity: 0;
+  transition: all .3s;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* API Key modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 300;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px 24px 0 0;
+  padding: 28px 24px 36px;
+  width: 100%;
+  max-width: 480px;
+  transform: translateY(100%);
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+
+.modal-overlay.show .modal { transform: translateY(0); }
+
+.modal-handle {
+  width: 40px; height: 4px;
+  background: var(--surface3);
+  border-radius: 2px;
+  margin: 0 auto 20px;
+}
+
+.modal-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.modal-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.modal-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 16px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Figtree', sans-serif;
+  outline: none;
+  margin-bottom: 14px;
+  transition: border-color .2s;
+}
+
+.modal-input:focus { border-color: var(--accent); }
+
+.modal-btn {
+  width: 100%;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: 0 4px 14px rgba(255,107,53,0.35);
+}
+
+.modal-btn:active { transform: scale(0.98); }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="header">
+  <div class="header-top">
+    <div class="logo-area">
+      <div class="logo-mark">T→</div>
+      <div class="logo-name">Trae<span>lo</span></div>
+    </div>
+    <div class="header-actions">
+      <div class="casillero-badge" id="casillero-badge">COL-2847</div>
+      <div class="icon-btn" onclick="showToast('🔔 Sin notificaciones nuevas')">🔔</div>
+    </div>
+  </div>
+  <div class="search-bar">
+    <div class="search-input-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input class="search-input" placeholder="Buscar en Traelo o pedirle al agente..." id="search-input"/>
+    </div>
+    <button class="agent-trigger-btn" onclick="switchTab('agent')">🤖</button>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN
+============================================================ -->
+<main class="main">
+
+  <!-- HOME VIEW -->
+  <div class="view active" id="view-home">
+    <!-- Hero -->
+    <div class="hero-banner">
+      <div class="hero-tag">✈️ Envío USA → Colombia</div>
+      <h1 class="hero-title">Trae cualquier producto<br><span>que quieras de USA</span></h1>
+      <p class="hero-sub">Casillero en Miami · Paga en COP · Tracking en tiempo real</p>
+      <button class="hero-btn" onclick="switchTab('agent')">
+        🤖 Preguntarle al agente
+      </button>
+    </div>
+
+    <!-- Agent alert -->
+    <div class="agent-alert" onclick="switchTab('agent')">
+      <div class="agent-alert-icon">🎯</div>
+      <div class="agent-alert-text">
+        <strong>El agente encontró 8 productos hoy</strong>
+        <span>Ahorros de hasta 52% sobre precios en Colombia</span>
+      </div>
+      <div class="agent-alert-arrow">›</div>
+    </div>
+
+    <!-- Categories -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Categorías</div>
+      </div>
+      <div class="categories">
+        <div class="cat-pill active">🛍️ Todo</div>
+        <div class="cat-pill">💻 Electrónica</div>
+        <div class="cat-pill">👟 Ropa y Zapatos</div>
+        <div class="cat-pill">💊 Suplementos</div>
+        <div class="cat-pill">🏠 Hogar</div>
+        <div class="cat-pill">🎮 Gaming</div>
+        <div class="cat-pill">📚 Libros</div>
+        <div class="cat-pill">🧴 Belleza</div>
+      </div>
+    </div>
+
+    <!-- Products grid (demo) -->
+    <div class="product-grid">
+      <div class="product-card" onclick="switchTab('agent')">
+        <div class="product-img">🎧</div>
+        <div class="product-badge">-41%</div>
+        <div class="product-info">
+          <div class="product-name">Sony WH-1000XM5 Noise Cancelling</div>
+          <div class="product-prices">
+            <div class="price-usa">$248 USD</div>
+            <div class="price-col">$1.800.000 en CO</div>
+            <div class="price-saving">Ahorras $780.000</div>
+          </div>
+        </div>
+      </div>
+      <div class="product-card" onclick="switchTab('agent')">
+        <div class="product-img">⌚</div>
+        <div class="product-badge">-38%</div>
+        <div class="product-info">
+          <div class="product-name">Apple Watch Series 10 GPS 42mm</div>
+          <div class="product-prices">
+            <div class="price-usa">$299 USD</div>
+            <div class="price-col">$2.100.000 en CO</div>
+            <div class="price-saving">Ahorras $876.000</div>
+          </div>
+        </div>
+      </div>
+      <div class="product-card" onclick="switchTab('agent')">
+        <div class="product-img">🏋️</div>
+        <div class="product-badge">-52%</div>
+        <div class="product-info">
+          <div class="product-name">Optimum Nutrition Gold Standard Whey 5lb</div>
+          <div class="product-prices">
+            <div class="price-usa">$54 USD</div>
+            <div class="price-col">$480.000 en CO</div>
+            <div class="price-saving">Ahorras $265.000</div>
+          </div>
+        </div>
+      </div>
+      <div class="product-card" onclick="switchTab('agent')">
+        <div class="product-img">📷</div>
+        <div class="product-badge red">No llega a CO</div>
+        <div class="product-info">
+          <div class="product-name">Canon EOS R50 Mirrorless Camera Kit</div>
+          <div class="product-prices">
+            <div class="price-usa">$679 USD</div>
+            <div class="price-col">$4.200.000 en CO</div>
+            <div class="price-saving">Ahorras $1.420.000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust signals -->
+    <div class="trust-row">
+      <div class="trust-card">
+        <div class="trust-icon">📦</div>
+        <div class="trust-label">Casillero en Miami real</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🔒</div>
+        <div class="trust-label">Pago seguro en COP</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">📍</div>
+        <div class="trust-label">Tracking en vivo</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+  <!-- END HOME -->
+
+  <!-- AGENT VIEW -->
+  <div class="view" id="view-agent">
+    <div class="agent-view">
+      <!-- Agent header -->
+      <div class="agent-header">
+        <div class="agent-header-top">
+          <div class="agent-avatar">🤖</div>
+          <div class="agent-info">
+            <strong>Agente Cazador</strong>
+            <span>En línea · listo para cazar</span>
+          </div>
+        </div>
+        <div class="quick-prompts">
+          <div class="qp-btn" onclick="useQuickPrompt(this)">🎧 Audífonos Sony bajo $200</div>
+          <div class="qp-btn" onclick="useQuickPrompt(this)">💪 Proteína Whey 5lb</div>
+          <div class="qp-btn" onclick="useQuickPrompt(this)">📱 iPhone accesorios</div>
+          <div class="qp-btn" onclick="useQuickPrompt(this)">🎮 PlayStation 5</div>
+          <div class="qp-btn" onclick="useQuickPrompt(this)">⌚ Smartwatch bajo $150</div>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages-area" id="messages-area">
+        <!-- Welcome message -->
+        <div class="msg agent">
+          <div class="msg-bubble">
+            Hola 👋 Soy tu agente cazador de productos. Dime qué quieres traer de USA y yo te digo:<br><br>
+            ✅ Si llega a Colombia o no<br>
+            💰 Cuánto te cuesta puesto acá (con flete)<br>
+            📊 Cuánto ahorras vs precios en Colombia
+          </div>
+          <div class="msg-time">Ahora</div>
+        </div>
+      </div>
+
+      <!-- Chat input -->
+      <div class="chat-input-area">
+        <div class="chat-input-row">
+          <textarea class="chat-input" id="chat-input" placeholder="Ej: busca audífonos Sony bajo $200..." rows="1"></textarea>
+          <button class="send-btn" id="send-btn" onclick="sendMessage()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END AGENT -->
+
+  <!-- PEDIDOS VIEW -->
+  <div class="view" id="view-pedidos">
+    <div class="pedidos-view">
+      <div class="section-title" style="margin-bottom:20px">Mis Pedidos</div>
+      <div class="empty-state">
+        <div class="empty-icon">📦</div>
+        <div class="empty-title">Sin pedidos aún</div>
+        <div class="empty-sub">Cuando hagas tu primer pedido aparecerá aquí con tracking en tiempo real</div>
+        <button class="empty-btn" onclick="switchTab('agent')">🤖 Buscar con el agente</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARRITO VIEW -->
+  <div class="view" id="view-carrito">
+    <div class="pedidos-view">
+      <div class="section-title" style="margin-bottom:20px">Mi Carrito</div>
+      <div class="empty-state">
+        <div class="empty-icon">🛒</div>
+        <div class="empty-title">Carrito vacío</div>
+        <div class="empty-sub">Agrega productos desde el agente o explora las categorías</div>
+        <button class="empty-btn" onclick="switchTab('home')">🛍️ Explorar productos</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUENTA VIEW -->
+  <div class="view" id="view-cuenta">
+    <div class="cuenta-view">
+      <div class="profile-card">
+        <div class="profile-avatar">J</div>
+        <div class="profile-info">
+          <strong>Juan Colombiano</strong>
+          <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f19b84909fb1949c90989ddf929e9c">[email&#160;protected]</a> · Plan Free</span>
+        </div>
+      </div>
+
+      <div class="casillero-card">
+        <div class="casillero-label">📦 Tu Casillero en Miami</div>
+        <div class="casillero-code">COL-2847</div>
+        <div class="casillero-address">
+          <strong>Dirección de envío en USA:</strong>
+          Juan Colombiano — COL-2847<br>
+          8001 NW 79th Ave, Suite 2847<br>
+          Miami, FL 33166<br>
+          United States
+        </div>
+        <button class="copy-btn" onclick="copyAddress()">
+          📋 Copiar dirección completa
+        </button>
+      </div>
+
+      <div class="menu-list">
+        <div class="menu-item" onclick="showApiModal()">
+          <div class="menu-item-icon">🔑</div>
+          <div class="menu-item-text">Clave API del Agente</div>
+          <div class="menu-item-arrow">›</div>
+        </div>
+        <div class="menu-item" onclick="showToast('🚧 Próximamente')">
+          <div class="menu-item-icon">💳</div>
+          <div class="menu-item-text">Métodos de Pago</div>
+          <div class="menu-item-arrow">›</div>
+        </div>
+        <div class="menu-item" onclick="showToast('🚧 Próximamente')">
+          <div class="menu-item-icon">🔔</div>
+          <div class="menu-item-text">Notificaciones</div>
+          <div class="menu-item-arrow">›</div>
+        </div>
+        <div class="menu-item" onclick="showToast('🚧 Próximamente')">
+          <div class="menu-item-icon">📊</div>
+          <div class="menu-item-text">Mi Historial de Ahorro</div>
+          <div class="menu-item-arrow">›</div>
+        </div>
+        <div class="menu-item" onclick="showToast('🚧 Próximamente')">
+          <div class="menu-item-icon">🤝</div>
+          <div class="menu-item-text">Referir amigos (gana $10)</div>
+          <div class="menu-item-arrow">›</div>
+        </div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ============================================================
+     BOTTOM NAV
+============================================================ -->
+<nav class="bottom-nav">
+  <div class="nav-item active" id="nav-home" onclick="switchTab('home')">
+    <div class="nav-icon">🏠</div>
+    <div class="nav-label">Inicio</div>
+  </div>
+  <div class="nav-item" id="nav-agent" onclick="switchTab('agent')">
+    <div class="nav-icon">🤖</div>
+    <div class="nav-label">Agente</div>
+    <div class="nav-dot"></div>
+  </div>
+  <div class="nav-item" id="nav-pedidos" onclick="switchTab('pedidos')">
+    <div class="nav-icon">📦</div>
+    <div class="nav-label">Pedidos</div>
+  </div>
+  <div class="nav-item" id="nav-carrito" onclick="switchTab('carrito')">
+    <div class="nav-icon">🛒</div>
+    <div class="nav-label">Carrito</div>
+  </div>
+  <div class="nav-item" id="nav-cuenta" onclick="switchTab('cuenta')">
+    <div class="nav-icon">👤</div>
+    <div class="nav-label">Yo</div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     API KEY MODAL
+============================================================ -->
+<div class="modal-overlay" id="api-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🔑 Clave API del Agente</div>
+    <div class="modal-sub">Ingresa tu Anthropic API Key para activar el agente cazador. Puedes obtenerla en console.anthropic.com</div>
+    <input class="modal-input" type="password" id="api-key-input" placeholder="sk-ant-api03-..."/>
+    <button class="modal-btn" onclick="saveApiKey()">Activar Agente 🤖</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     TOAST
+============================================================ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ============================================================
+// STATE
+// ============================================================
+let activeTab = 'home';
+let apiKey = localStorage.getItem('traelo_api_key') || '';
+let isLoading = false;
+const TRM = 4100; // COP per USD — actualizar periódicamente
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function switchTab(tab) {
+  // Hide all views
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  // Show target
+  document.getElementById('view-' + tab).classList.add('active');
+  document.getElementById('nav-' + tab).classList.add('active');
+  activeTab = tab;
+
+  // Remove agent dot when opened
+  if (tab === 'agent') {
+    const dot = document.querySelector('#nav-agent .nav-dot');
+    if (dot) dot.style.display = 'none';
+  }
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ============================================================
+// COPY ADDRESS
+// ============================================================
+function copyAddress() {
+  const addr = `Juan Colombiano — COL-2847\n8001 NW 79th Ave, Suite 2847\nMiami, FL 33166\nUnited States`;
+  navigator.clipboard.writeText(addr).then(() => {
+    showToast('✅ Dirección copiada');
+  }).catch(() => showToast('Copia manualmente la dirección'));
+}
+
+// ============================================================
+// API KEY MODAL
+// ============================================================
+function showApiModal() {
+  const modal = document.getElementById('api-modal');
+  modal.classList.add('show');
+  if (apiKey) document.getElementById('api-key-input').value = apiKey;
+}
+
+function saveApiKey() {
+  const val = document.getElementById('api-key-input').value.trim();
+  if (!val.startsWith('sk-ant')) {
+    showToast('❌ Clave inválida. Empieza con sk-ant');
+    return;
+  }
+  apiKey = val;
+  localStorage.setItem('traelo_api_key', apiKey);
+  document.getElementById('api-modal').classList.remove('show');
+  showToast('✅ Agente activado con éxito');
+}
+
+document.getElementById('api-modal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('show');
+});
+
+// ============================================================
+// CHAT — AUTO-RESIZE
+// ============================================================
+const chatInput = document.getElementById('chat-input');
+chatInput.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+});
+
+chatInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+// ============================================================
+// QUICK PROMPTS
+// ============================================================
+function useQuickPrompt(el) {
+  chatInput.value = el.textContent.trim().replace(/^[^\w]+/, '');
+  chatInput.dispatchEvent(new Event('input'));
+  chatInput.focus();
+}
+
+// ============================================================
+// ADD MESSAGE TO CHAT
+// ============================================================
+function addMessage(role, content, isHtml = false) {
+  const area = document.getElementById('messages-area');
+  const now = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+
+  const msg = document.createElement('div');
+  msg.className = `msg ${role}`;
+
+  if (isHtml) {
+    msg.innerHTML = content;
+  } else {
+    msg.innerHTML = `
+      <div class="msg-bubble">${content}</div>
+      <div class="msg-time">${now}</div>
+    `;
+  }
+
+  area.appendChild(msg);
+  area.scrollTop = area.scrollHeight;
+  return msg;
+}
+
+// ============================================================
+// TYPING INDICATOR
+// ============================================================
+function showTyping() {
+  const area = document.getElementById('messages-area');
+  const typing = document.createElement('div');
+  typing.className = 'msg agent';
+  typing.id = 'typing-indicator';
+  typing.innerHTML = `
+    <div class="typing-indicator">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  `;
+  area.appendChild(typing);
+  area.scrollTop = area.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+// ============================================================
+// RENDER PRODUCT CARDS
+// ============================================================
+function renderProductCards(productos) {
+  if (!productos || !productos.length) return '';
+
+  return productos.map(p => {
+    const vale = p.vale_la_pena;
+    const ahorroCOP = p.ahorro_cop > 0
+      ? `+$${formatNum(p.ahorro_cop)} COP`
+      : `-$${formatNum(Math.abs(p.ahorro_cop))} COP`;
+    const precioCO = p.precio_colombia_cop
+      ? `$${formatNum(p.precio_colombia_cop)} COP`
+      : 'N/D';
+    const precioTotal = `$${formatNum(Math.round(p.precio_total_usd * TRM))} COP`;
+
+    return `
+      <div class="product-result ${vale ? 'vale' : 'no-vale'}">
+        <div class="pr-header">
+          <div class="pr-name">${p.nombre}</div>
+          <div class="pr-verdict">${vale ? '✅ Conviene' : '❌ No conviene'}</div>
+        </div>
+        <div class="pr-prices">
+          <div class="pr-price-item">
+            <div class="pr-price-label">Precio USA</div>
+            <div class="pr-price-val accent">$${p.precio_usd} USD</div>
+          </div>
+          <div class="pr-price-item">
+            <div class="pr-price-label">Total puesto CO</div>
+            <div class="pr-price-val">${precioTotal}</div>
+          </div>
+          <div class="pr-price-item">
+            <div class="pr-price-label">En Colombia</div>
+            <div class="pr-price-val red">${precioCO}</div>
+          </div>
+        </div>
+        <div class="pr-saving-row">
+          <div class="pr-saving-label">${vale ? '💰 Ahorro estimado' : '⚠️ Diferencia'}</div>
+          <div class="pr-saving-amount">${ahorroCOP}</div>
+        </div>
+        <div class="pr-reason">${p.razon}</div>
+        <div class="pr-cta">
+          <button class="pr-btn primary" onclick="showToast('🚧 Integración Amazon próximamente')">Ver en Amazon</button>
+          <button class="pr-btn secondary" onclick="showToast('➕ Agregado al carrito')">+ Carrito</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function formatNum(n) {
+  return Math.round(n).toLocaleString('es-CO');
+}
+
+// ============================================================
+// SEND MESSAGE + CALL CLAUDE API
+// ============================================================
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || isLoading) return;
+
+  if (!apiKey) {
+    showApiModal();
+    showToast('⚠️ Primero activa el agente con tu API Key');
+    return;
+  }
+
+  // Add user message
+  addMessage('user', text);
+  input.value = '';
+  input.style.height = 'auto';
+  input.style.height = '44px';
+
+  isLoading = true;
+  document.getElementById('send-btn').disabled = true;
+  showTyping();
+
+  // Switch to agent tab if not already there
+  if (activeTab !== 'agent') switchTab('agent');
+
+  const SYSTEM_PROMPT = `Eres el Agente Cazador de Traelo, experto en compras internacionales USA → Colombia.
+
+Tu misión cuando el usuario te pide un producto:
+1. Buscar ese producto en Amazon USA y otras tiendas gringas
+2. Identificar si Amazon lo envía directamente a Colombia (si no → oportunidad de casillero)
+3. Calcular costo TOTAL puesto en Colombia:
+   - Precio del producto en USD
+   - Flete casillero: ~$10/lb (peso estimado según el producto)
+   - Arancel: 15-20% electrónica, 5% ropa/zapatos, 0% libros, 10% suplementos, 15% otros
+   - Total USD → convertir a COP usando TRM = 4100
+4. Buscar precio actual en Colombia (Falabella, Éxito, MercadoLibre CO)
+5. Calcular ahorro neto en COP
+
+Responde ÚNICAMENTE con un JSON válido, sin texto antes ni después, sin markdown, sin backticks:
+{
+  "mensaje_intro": "texto amigable de introducción en español",
+  "productos": [
+    {
+      "nombre": "nombre completo del producto",
+      "tienda": "Amazon",
+      "precio_usd": 89.99,
+      "llega_colombia": false,
+      "peso_estimado_lb": 1.2,
+      "costo_flete_usd": 12.0,
+      "arancel_pct": 15,
+      "precio_total_usd": 115.49,
+      "precio_colombia_cop": 450000,
+      "precio_traelo_cop": 473509,
+      "ahorro_cop": -23509,
+      "vale_la_pena": true,
+      "razon": "explicación clara de por qué conviene o no, incluyendo si no llega a Colombia directamente"
+    }
+  ],
+  "mensaje_final": "recomendación final y próximos pasos"
+}
+
+Reglas:
+- vale_la_pena = true solo si el ahorro es > 15% sobre precio en Colombia
+- Si el producto no llega a Colombia directamente, eso suma valor al casillero
+- Presenta máximo 3 opciones ordenadas por conveniencia
+- Usa siempre TRM = 4100 COP/USD
+- El precio_traelo_cop = (precio_total_usd * 4100) + fee_servicio (fee = 35000 COP fijo)
+- Si no encuentras precio en Colombia, estima con precio_colombia_cop = precio_usd * 4100 * 1.6 (markup típico importador)`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: SYSTEM_PROMPT,
+        tools: [{
+          type: 'web_search_20250305',
+          name: 'web_search'
+        }],
+        messages: [{ role: 'user', content: text }]
+      })
+    });
+
+    const data = await response.json();
+    hideTyping();
+
+    if (!response.ok) {
+      const errMsg = data?.error?.message || 'Error de conexión con el agente';
+      addMessage('agent', `❌ Error: ${errMsg}`);
+      return;
+    }
+
+    // Extract text from response (handles tool_use flow)
+    const textBlock = data.content?.find(b => b.type === 'text');
+    const rawText = textBlock?.text || '';
+
+    // Clean and parse JSON
+    const clean = rawText.replace(/```json|```/g, '').trim();
+
+    let parsed;
+    try {
+      parsed = JSON.parse(clean);
+    } catch {
+      // Not JSON — show as plain text
+      addMessage('agent', rawText || 'No encontré resultados. Intenta con otra búsqueda.');
+      return;
+    }
+
+    // Build rich response
+    const introHtml = `
+      <div class="msg agent">
+        <div class="msg-bubble">${parsed.mensaje_intro || 'Encontré estos resultados:'}</div>
+        ${renderProductCards(parsed.productos)}
+        ${parsed.mensaje_final ? `<div class="msg-bubble" style="margin-top:10px">${parsed.mensaje_final}</div>` : ''}
+        <div class="msg-time">${new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })}</div>
+      </div>
+    `;
+
+    addMessage('agent', introHtml, true);
+
+  } catch (err) {
+    hideTyping();
+    addMessage('agent', '❌ Sin conexión. Verifica tu internet e intenta de nuevo.');
+    console.error(err);
+  } finally {
+    isLoading = false;
+    document.getElementById('send-btn').disabled = false;
+  }
+}
+
+// ============================================================
+// SEARCH BAR → AGENT
+// ============================================================
+document.getElementById('search-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && this.value.trim()) {
+    chatInput.value = this.value.trim();
+    this.value = '';
+    switchTab('agent');
+    sendMessage();
+  }
+});
+
+// ============================================================
+// INIT
+// ==========================
