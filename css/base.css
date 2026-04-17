@@ -1,0 +1,14 @@
+:root {
+  --bg:#080A10;--surface:#0F1118;--surface2:#181C27;--surface3:#21263A;
+  --accent:#FF6B35;--accent-dim:rgba(255,107,53,0.12);
+  --green:#00C9A7;--green-dim:rgba(0,201,167,0.12);
+  --red:#FF4560;--red-dim:rgba(255,69,96,0.12);
+  --yellow:#FFD166;--yellow-dim:rgba(255,209,102,0.12);
+  --text:#EEEEF2;--text-muted:#6B7380;--text-dim:#3D4255;
+  --border:rgba(255,255,255,0.07);
+  --radius:16px;--radius-sm:10px;--nav-h:68px;--header-h:112px;
+  font-family:'Figtree',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);min-height:100dvh;max-width:480px;margin:0 auto;overflow-x:hidden;}
