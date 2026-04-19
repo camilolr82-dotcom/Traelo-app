@@ -3,7 +3,8 @@ window.TraeloConfig = {
   FEE: 35000,
   API_URL: 'https://api.anthropic.com/v1/messages',
   MODEL: 'claude-sonnet-4-20250514',
-  DIRECCION_CASILLERO: 'Juan Colombiano — COL-2847\n8001 NW 79th Ave, Suite 2847\nMiami, FL 33166\nUnited States'
+  DIRECCION_CASILLERO: 'Juan Colombiano — COL-2847\n8001 NW 79th Ave, Suite 2847\nMiami, FL 33166\nUnited States',
+  RAPIDAPI_AMAZON_HOST: 'real-time-amazon-data.p.rapidapi.com'
 };
 
 window.fmtCOP = function(n){ return Math.round(n).toLocaleString('es-CO'); };

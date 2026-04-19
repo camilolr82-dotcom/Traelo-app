@@ -63,10 +63,21 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="rapidapi-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🔑 Clave RapidAPI (Amazon)</div>
+    <div class="modal-sub">Para precios reales de Amazon. Obténla en rapidapi.com suscribiéndote a Real-Time Amazon Data. Sin esto, el agente solo buscará en MercadoLibre.</div>
+    <input class="modal-input" type="password" id="rapidapi-key-input" placeholder="Pega tu RapidAPI key..."/>
+    <button class="modal-btn" onclick="saveRapidApiKey()">Activar APIs de marketplace</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="js/config.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/marketplace.js"></script>
 <script src="js/calc.js"></script>
 <script src="js/agent.js"></script>
 <script src="js/app.js"></script>

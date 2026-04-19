@@ -41,9 +41,25 @@ function copyAddress(){
     .catch(() => showToast('Copia manualmente'));
 }
 
+function showRapidApiModal(){
+  document.getElementById('rapidapi-modal').classList.add('show');
+  const saved = localStorage.getItem('traelo_rapidapi_key') || '';
+  if(saved) document.getElementById('rapidapi-key-input').value = saved;
+}
+
+function saveRapidApiKey(){
+  const v = document.getElementById('rapidapi-key-input').value.trim();
+  if(!v){ showToast('❌ Clave vacía'); return; }
+  localStorage.setItem('traelo_rapidapi_key', v);
+  document.getElementById('rapidapi-modal').classList.remove('show');
+  showToast('✅ APIs de marketplace activadas');
+}
+
 function initUI(){
   const modal = document.getElementById('api-modal');
   modal.addEventListener('click', function(e){ if(e.target === this) this.classList.remove('show'); });
+  const rapidModal = document.getElementById('rapidapi-modal');
+  rapidModal.addEventListener('click', function(e){ if(e.target === this) this.classList.remove('show'); });
 }
 
 window.switchTab = switchTab;
@@ -51,4 +67,6 @@ window.showToast = showToast;
 window.showApiModal = showApiModal;
 window.saveApiKey = saveApiKey;
 window.copyAddress = copyAddress;
+window.showRapidApiModal = showRapidApiModal;
+window.saveRapidApiKey = saveRapidApiKey;
 window.initUI = initUI;
