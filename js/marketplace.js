@@ -1,3 +1,18 @@
+const _mlCache = new Map();
+const _CACHE_TTL_MS = 10 * 60 * 1000;
+
+function extraerJSON(texto){
+  if(!texto) return null;
+  try{ return JSON.parse(texto.trim()); }catch(_){}
+  const sinBackticks = texto.replace(/```json|```/g, '').trim();
+  try{ return JSON.parse(sinBackticks); }catch(_){}
+  const match = texto.match(/\{[\s\S]*\}/);
+  if(match){
+    try{ return JSON.parse(match[0]); }catch(_){}
+  }
+  return null;
+}
+
 async function buscarAmazon(query, limit = 5){
   const key = localStorage.getItem('traelo_rapidapi_key');
   if(!key) throw new Error('sin_key');
@@ -42,9 +57,123 @@ async function buscarAmazon(query, limit = 5){
   return normalizados.slice(0, limit);
 }
 
+async function buscarML(query, limit = 5){
+  const cacheKey = query.trim().toLowerCase();
+  const cached = _mlCache.get(cacheKey);
+  if(cached && (Date.now() - cached.timestamp < _CACHE_TTL_MS)){
+    return cached.result;
+  }
+  if(cached){
+    _mlCache.delete(cacheKey);
+  }
+
+  const cacheEmpty = () => {
+    _mlCache.set(cacheKey, { result: [], timestamp: Date.now() });
+    return [];
+  };
+
+  const apiKey = localStorage.getItem('traelo_api_key');
+  if(!apiKey){
+    console.warn('buscarML best-effort fallback:', 'sin_key');
+    return cacheEmpty();
+  }
+
+  const { API_URL, MODEL } = window.TraeloConfig;
+
+  const SYS = `Busca productos en mercadolibre.com.co usando web_search. Haz UNA sola búsqueda. No hagas múltiples queries. Usa solo los snippets de resultados, no navegues páginas completas.
+
+Devuelve SOLO JSON sin backticks ni texto adicional:
+{"productos":[{"nombre":"string","precio_cop":number,"url":"string","imagen":null,"condition":"new","envio_gratis":false}]}
+
+Reglas:
+- Máximo 5 productos
+- precio_cop: número entero en pesos (ej: 4500000)
+- url: link directo a mercadolibre.com.co
+- Si el precio no es claro en el snippet, omite el producto
+- Si no encuentras nada en la primera búsqueda, devuelve {"productos":[]} y termina
+- Nunca inventes datos
+- imagen siempre null (ahorra tokens)
+- condition default 'new', envio_gratis default false (ahorra tokens)`;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+  let res;
+  try{
+    res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 800,
+        system: SYS,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: query }]
+      }),
+      signal: controller.signal
+    });
+  }catch(e){
+    clearTimeout(timeoutId);
+    const razon = e.name === 'AbortError' ? 'timeout' : 'api_error';
+    console.warn('buscarML best-effort fallback:', razon);
+    return cacheEmpty();
+  }
+  clearTimeout(timeoutId);
+
+  if(!res.ok){
+    console.warn('buscarML best-effort fallback:', 'api_error');
+    return cacheEmpty();
+  }
+
+  const data = await res.json();
+  const textBlocks = (data.content || []).filter(b => b.type === 'text');
+  const rawText = textBlocks.length ? textBlocks[textBlocks.length - 1].text : '';
+
+  const parsed = extraerJSON(rawText);
+  if(!parsed){
+    console.warn('buscarML best-effort fallback:', 'parse_error');
+    return cacheEmpty();
+  }
+
+  if(!Array.isArray(parsed.productos)){
+    console.warn('buscarML best-effort fallback:', 'api_error');
+    return cacheEmpty();
+  }
+  if(parsed.productos.length === 0){
+    console.warn('buscarML best-effort fallback:', 'no_results');
+    return cacheEmpty();
+  }
+
+  const normalizados = parsed.productos
+    .map(p => ({
+      fuente: 'mercadolibre',
+      nombre: p.nombre || '',
+      precio_cop: typeof p.precio_cop === 'number' ? p.precio_cop : 0,
+      imagen: p.imagen == null ? null : p.imagen,
+      url: p.url == null ? null : p.url,
+      condition: p.condition == null ? null : p.condition,
+      envio_gratis: !!p.envio_gratis
+    }))
+    .filter(p => p.nombre && p.precio_cop > 0);
+
+  if(!normalizados.length){
+    console.warn('buscarML best-effort fallback:', 'no_results');
+    return cacheEmpty();
+  }
+  const result = normalizados.slice(0, limit);
+  _mlCache.set(cacheKey, { result, timestamp: Date.now() });
+  return result;
+}
+
 async function compararPrecios(query){
-  const [amzRes] = await Promise.allSettled([
-    buscarAmazon(query)
+  const [amzRes, mlRes] = await Promise.allSettled([
+    buscarAmazon(query),
+    buscarML(query)
   ]);
 
   const out = { amazon: [], mercadolibre: [], errores: {} };
@@ -52,7 +181,10 @@ async function compararPrecios(query){
   if(amzRes.status === 'fulfilled') out.amazon = amzRes.value;
   else out.errores.amazon = (amzRes.reason && amzRes.reason.message) || 'error';
 
+  if(mlRes.status === 'fulfilled') out.mercadolibre = mlRes.value;
+  else out.errores.ml = (mlRes.reason && mlRes.reason.message) || 'error';
+
   return out;
 }
 
-window.Marketplace = { buscarAmazon, compararPrecios };
+window.Marketplace = { buscarAmazon, buscarML, compararPrecios };
