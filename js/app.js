@@ -11,7 +11,23 @@ async function loadViews(){
   main.innerHTML = htmls.join('\n');
 }
 
+async function fetchTRM(){
+  try {
+    const res = await fetch(window.TraeloConfig.TRM_URL);
+    if(!res.ok) return;
+    const data = await res.json();
+    const valor = parseFloat(data?.[0]?.valor);
+    if(valor > 3000 && valor < 6000){
+      window.TraeloConfig.TRM = valor;
+      console.log('TRM actualizada:', valor);
+    }
+  } catch (e) {
+    console.warn('TRM fetch fallido, usando fallback:', window.TraeloConfig.TRM);
+  }
+}
+
 async function init(){
+  await fetchTRM();
   try {
     await loadViews();
   } catch (err) {

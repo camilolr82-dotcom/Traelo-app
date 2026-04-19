@@ -1,5 +1,7 @@
 window.TraeloConfig = {
   TRM: 4100,
+  TRM_FALLBACK: 4100,
+  TRM_URL: 'https://www.datos.gov.co/resource/mcec-87by.json?$order=vigenciadesde%20DESC&$limit=1',
   FEE: 35000,
   API_URL: 'https://api.anthropic.com/v1/messages',
   MODEL: 'claude-haiku-4-5',
