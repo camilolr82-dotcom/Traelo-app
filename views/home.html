@@ -1,60 +1,19 @@
 <div class="view active" id="view-home">
-  <div class="hero-banner">
-    <div class="hero-tag">✈️ Envío USA → Colombia</div>
-    <h1 class="hero-title">Trae cualquier producto<br><span>que quieras de USA</span></h1>
-    <p class="hero-sub">Casillero en Miami · Paga en COP · Tracking en tiempo real</p>
-    <div class="hero-btns">
-      <button class="hero-btn" onclick="switchTab('agent')">🤖 Preguntarle al agente</button>
-      <button class="hero-btn secondary" onclick="switchTab('calc')">🧮 Calcular envío</button>
+  <div class="home-search-hero">
+    <h1 class="home-hero-title">¿Qué quieres traer de USA?</h1>
+    <p class="home-hero-sub">Busca cualquier producto y te mostramos cuánto cuesta puesto en Colombia</p>
+    <div class="home-search-box">
+      <input type="text" id="home-search-input" class="home-search-input" placeholder="Ej: audífonos Sony, iPhone, whey protein..." autocomplete="off"/>
+      <button class="home-camera-btn" id="home-camera-btn" onclick="Home.abrirCamara()" title="Buscar por foto">📸</button>
+      <button class="home-search-btn" id="home-search-btn" onclick="Home.buscarDesdeInput()" title="Buscar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
     </div>
   </div>
-  <div class="agent-alert" onclick="switchTab('agent')">
-    <div class="agent-alert-icon">🎯</div>
-    <div class="agent-alert-text">
-      <strong>El agente encontró 8 productos hoy</strong>
-      <span>Ahorros de hasta 52% sobre precios en Colombia</span>
-    </div>
-    <div class="agent-alert-arrow">›</div>
-  </div>
-  <div class="section">
-    <div class="section-header"><div class="section-title">Categorías</div></div>
-    <div class="categories">
-      <div class="cat-pill active">🛍️ Todo</div>
-      <div class="cat-pill">💻 Electrónica</div>
-      <div class="cat-pill">👟 Ropa y Zapatos</div>
-      <div class="cat-pill">💊 Suplementos</div>
-      <div class="cat-pill">🏠 Hogar</div>
-      <div class="cat-pill">🎮 Gaming</div>
-      <div class="cat-pill">📚 Libros</div>
-      <div class="cat-pill">🧴 Belleza</div>
+  <div class="home-results" id="home-results">
+    <div class="home-empty">
+      <div class="home-empty-icon">🔍</div>
+      <div class="home-empty-text">Busca un producto para ver los 4 mejores resultados de Amazon<br>con precio total puesto en Colombia</div>
     </div>
   </div>
-  <div class="product-grid">
-    <div class="product-card" onclick="switchTab('agent')">
-      <div class="product-img">🎧</div><div class="product-badge">-41%</div>
-      <div class="product-info"><div class="product-name">Sony WH-1000XM5 Noise Cancelling</div>
-        <div class="price-usa">$248 USD</div><div class="price-col">$1.800.000 en CO</div><div class="price-saving">Ahorras $780.000</div></div>
-    </div>
-    <div class="product-card" onclick="switchTab('agent')">
-      <div class="product-img">⌚</div><div class="product-badge">-38%</div>
-      <div class="product-info"><div class="product-name">Apple Watch Series 10 GPS 42mm</div>
-        <div class="price-usa">$299 USD</div><div class="price-col">$2.100.000 en CO</div><div class="price-saving">Ahorras $876.000</div></div>
-    </div>
-    <div class="product-card" onclick="switchTab('agent')">
-      <div class="product-img">🏋️</div><div class="product-badge">-52%</div>
-      <div class="product-info"><div class="product-name">Optimum Nutrition Gold Standard Whey 5lb</div>
-        <div class="price-usa">$54 USD</div><div class="price-col">$480.000 en CO</div><div class="price-saving">Ahorras $265.000</div></div>
-    </div>
-    <div class="product-card" onclick="switchTab('agent')">
-      <div class="product-img">📷</div><div class="product-badge red">No llega a CO</div>
-      <div class="product-info"><div class="product-name">Canon EOS R50 Mirrorless Camera Kit</div>
-        <div class="price-usa">$679 USD</div><div class="price-col">$4.200.000 en CO</div><div class="price-saving">Ahorras $1.420.000</div></div>
-    </div>
-  </div>
-  <div class="trust-row">
-    <div class="trust-card"><div class="trust-icon">📦</div><div class="trust-label">Casillero en Miami real</div></div>
-    <div class="trust-card"><div class="trust-icon">🔒</div><div class="trust-label">Pago seguro en COP</div></div>
-    <div class="trust-card"><div class="trust-icon">📍</div><div class="trust-label">Tracking en vivo</div></div>
-  </div>
-  <div class="spacer"></div>
 </div>

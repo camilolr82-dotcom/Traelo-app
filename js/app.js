@@ -49,6 +49,10 @@ async function init(){
   window.initUI();
   window.initAgent();
 
+  if(window.Home && typeof window.Home.init === 'function'){
+    window.Home.init();
+  }
+
   const apiKey = localStorage.getItem('traelo_api_key') || '';
   if(apiKey) window.showToast('✅ Agente listo');
   else setTimeout(() => window.showToast('🔑 Activa el agente en "Yo"'), 1200);
