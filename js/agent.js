@@ -33,26 +33,76 @@ function hideTyping(){
   if(t) t.remove();
 }
 
-function renderCards(prods){
-  if(!prods || !prods.length) return '';
-  const { TRM } = window.TraeloConfig;
-  return prods.map(p => {
-    const vale = p.vale_la_pena;
-    const ahorroCOP = p.ahorro_cop > 0
-      ? `+$${window.fmtCOP(p.ahorro_cop)} COP`
-      : `-$${window.fmtCOP(Math.abs(p.ahorro_cop))} COP`;
+function escapeHtml(s){
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function precargarCalculadora(precioUsd){
+  window.switchTab('calc');
+  requestAnimationFrame(() => {
+    const n = parseFloat(precioUsd);
+    if(!Number.isFinite(n) || n <= 0) return;
+    const input = document.getElementById('precio-usd');
+    if(!input) return;
+    input.value = n;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+}
+
+function renderEstrellas(rating, num){
+  const r = Math.round(Number(rating) || 0);
+  if(r <= 0) return '';
+  const stars = '⭐'.repeat(Math.min(r, 5));
+  const n = Number(num) || 0;
+  return `${stars}${n > 0 ? ' · ' + n.toLocaleString('es-CO') + ' reviews' : ''}`;
+}
+
+function renderCards(productos, seleccionados){
+  if(!productos || !productos.length) return '';
+
+  let items;
+  if(Array.isArray(seleccionados) && seleccionados.length){
+    items = seleccionados
+      .map(s => ({ rec: s, producto: productos[s.idx] }))
+      .filter(x => x.producto);
+  } else {
+    items = productos.slice(0, 3).map((p, idx) => ({
+      rec: { idx, vale_la_pena: true, razon: (p.rating >= 4 ? 'Buen rating en Amazon.' : 'Precio competitivo en Amazon.') },
+      producto: p
+    }));
+  }
+
+  return items.map(({ rec, producto }) => {
+    const vale = !!rec.vale_la_pena;
+    const col = producto.colombia || {};
+    const estrellas = renderEstrellas(producto.rating, producto.reviews);
+    const hrefSafe = escapeHtml(producto.url || '#');
+    const imgSafe = escapeHtml(producto.imagen || '');
+    const badgesExtra = [];
+    if(producto.is_best_seller) badgesExtra.push('<span class="pr-verdict" style="background:var(--yellow-dim);color:var(--yellow)">🏆 Best Seller</span>');
+    if(producto.is_amazon_choice) badgesExtra.push('<span class="pr-verdict" style="background:var(--green-dim);color:var(--green)">Amazon\'s Choice</span>');
+
+    const imgHtml = imgSafe
+      ? `<img src="${imgSafe}" loading="lazy" onerror="this.style.display='none'" style="width:100%;max-height:140px;object-fit:contain;border-radius:8px;background:var(--surface2);margin-bottom:10px"/>`
+      : '';
+
     return `<div class="product-result ${vale ? 'vale' : 'no-vale'}">
-      <div class="pr-header"><div class="pr-name">${p.nombre}</div><div class="pr-verdict">${vale ? '✅ Conviene' : '❌ No conviene'}</div></div>
-      <div class="pr-prices">
-        <div class="pr-price-item"><div class="pr-price-label">Precio USA</div><div class="pr-price-val accent">$${p.precio_usd} USD</div></div>
-        <div class="pr-price-item"><div class="pr-price-label">Puesto en CO</div><div class="pr-price-val">$${window.fmtCOP(Math.round(p.precio_total_usd * TRM))} COP</div></div>
-        <div class="pr-price-item"><div class="pr-price-label">En Colombia</div><div class="pr-price-val red">${p.precio_colombia_cop ? '$' + window.fmtCOP(p.precio_colombia_cop) + ' COP' : 'N/D'}</div></div>
+      ${imgHtml}
+      <div class="pr-header"><div class="pr-name">${escapeHtml(producto.nombre)}</div><div class="pr-verdict">${vale ? '✅ Conviene' : '❌ No conviene'}</div></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="pr-verdict" style="background:var(--surface2);color:var(--text-muted);text-transform:capitalize">${escapeHtml(col.categoria || 'otros')}</span>
+        ${badgesExtra.join('')}
       </div>
-      <div class="pr-saving-row"><div class="pr-saving-label">${vale ? '💰 Ahorro' : '⚠️ Diferencia'}</div><div class="pr-saving-amount">${ahorroCOP}</div></div>
-      <div class="pr-reason">${p.razon}</div>
+      ${estrellas ? `<div class="pr-reason" style="margin-bottom:8px">${estrellas}</div>` : ''}
+      <div class="pr-prices">
+        <div class="pr-price-item"><div class="pr-price-label">Precio USA</div><div class="pr-price-val accent">$${escapeHtml(producto.precio_usd)} USD</div></div>
+        <div class="pr-price-item"><div class="pr-price-label">Puesto en CO</div><div class="pr-price-val">$${window.fmtCOP(col.total_cop || 0)}</div></div>
+        <div class="pr-price-item"><div class="pr-price-label">Peso est.</div><div class="pr-price-val">${col.peso_lb || '?'} lb</div></div>
+      </div>
+      <div class="pr-reason">${escapeHtml(rec.razon || 'Sin análisis disponible.')}</div>
       <div class="pr-cta">
-        <button class="pr-btn primary" onclick="showToast('🚧 Integración Amazon próximamente')">Ver en Amazon</button>
-        <button class="pr-btn secondary" onclick="showToast('➕ Agregado')">+ Carrito</button>
+        <a class="pr-btn primary" href="${hrefSafe}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:flex;align-items:center;justify-content:center">Ver en Amazon</a>
+        <button class="pr-btn secondary" onclick="precargarCalculadora(${Number(producto.precio_usd) || 0})">Calcular mi envío</button>
       </div>
     </div>`;
   }).join('');
@@ -61,8 +111,9 @@ function renderCards(prods){
 async function sendMessage(){
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
-  const apiKey = localStorage.getItem('traelo_api_key') || '';
   if(!text || isLoading) return;
+
+  const apiKey = localStorage.getItem('traelo_api_key') || '';
   if(!apiKey){ window.showApiModal(); window.showToast('⚠️ Activa el agente primero'); return; }
 
   addMessage('user', text);
@@ -72,46 +123,122 @@ async function sendMessage(){
   document.getElementById('send-btn').disabled = true;
   showTyping();
 
-  const SYS = `Eres el Agente Cazador de Traelo, experto en compras USA→Colombia. Busca el producto, verifica si llega a Colombia, calcula: precio+flete($11/lb)+arancel+fee($35.000 COP). TRM=4100. Responde SOLO JSON sin backticks:
-{"mensaje_intro":"...","productos":[{"nombre":"...","tienda":"Amazon","precio_usd":0,"llega_colombia":false,"peso_estimado_lb":0,"costo_flete_usd":0,"arancel_pct":15,"precio_total_usd":0,"precio_colombia_cop":0,"precio_traelo_cop":0,"ahorro_cop":0,"vale_la_pena":true,"razon":"..."}],"mensaje_final":"..."}
-vale_la_pena=true solo si ahorro>15%. Max 3 productos.`;
+  try {
+    let amazonProds = [];
+    let amazonErr = null;
+    try {
+      amazonProds = await window.Marketplace.buscarAmazon(text, 5);
+    } catch (e) {
+      amazonErr = e && e.message;
+    }
 
-  try{
-    const { API_URL, MODEL } = window.TraeloConfig;
-    const r = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: 2000,
-        system: SYS,
-        tools: [{ type:'web_search_20250305', name:'web_search' }],
-        messages: [{ role:'user', content: text }]
-      })
+    if(!amazonProds.length){
+      hideTyping();
+      const msg = amazonErr === 'sin_key'
+        ? '🔑 Necesitas activar tu RapidAPI key en la pestaña "Yo" para buscar en Amazon.'
+        : amazonErr === 'api_error'
+          ? '⚠️ Amazon no responde ahora. Intenta de nuevo en un momento.'
+          : '😕 No encontré productos para esa búsqueda. Prueba con otras palabras.';
+      addMessage('agent', msg);
+      return;
+    }
+
+    amazonProds.forEach(p => {
+      p.colombia = window.Enrichment.calcularPrecioColombia(p);
     });
-    const data = await r.json();
+
+    const payload = {
+      query: text,
+      trm: window.TraeloConfig.TRM,
+      productos: amazonProds.map((p, idx) => ({
+        idx,
+        nombre: p.nombre,
+        precio_usd: p.precio_usd,
+        total_cop: p.colombia.total_cop,
+        categoria: p.colombia.categoria,
+        peso_lb: p.colombia.peso_lb,
+        arancel_pct: p.colombia.arancel_pct,
+        rating: p.rating,
+        num_ratings: p.reviews || 0,
+        is_best_seller: !!p.is_best_seller,
+        is_amazon_choice: !!p.is_amazon_choice,
+        url: p.url
+      }))
+    };
+
+    const SYS = `Eres el Agente Cazador de Traelo, experto en ayudar a colombianos a decidir si les conviene importar un producto desde USA. Recibes productos REALES de Amazon ya con precios calculados (puestos en Colombia, incluyendo flete, arancel y fee). No calculas nada. Solo analizas y recomiendas.
+
+Tu trabajo:
+1. Elige los 3 productos más interesantes del listado (mejor relación calidad-precio, rating, ahorro, popularidad).
+2. Para cada uno explica en 1-2 frases por qué vale (o no vale) la pena.
+3. Si todos los productos tienen precio_total_cop muy alto o son productos sospechosos (accesorios baratos, refurbished, bundles raros), dilo honestamente.
+
+Reglas estrictas:
+- NUNCA inventes precios, productos ni datos. Solo usa lo que te pasé en el user message.
+- El idx del producto lo uso yo para mergear. Siempre devuelvelo.
+- Responde SOLO JSON sin backticks ni texto adicional.
+
+Formato exacto:
+{"mensaje_intro":"string corta de 1 frase","seleccionados":[{"idx":0,"vale_la_pena":true,"razon":"1-2 frases"}],"mensaje_final":"string corta opcional"}
+
+Máximo 3 items en seleccionados. Si ningún producto vale la pena, manda seleccionados:[] y explica en mensaje_final.`;
+
+    let claudeJson = null;
+    try {
+      const r = await fetch(window.TraeloConfig.API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: window.TraeloConfig.MODEL,
+          max_tokens: 1000,
+          system: SYS,
+          messages: [{ role: 'user', content: JSON.stringify(payload) }]
+        })
+      });
+      if(r.ok){
+        const data = await r.json();
+        const textBlocks = (data.content || []).filter(b => b.type === 'text');
+        const rawText = textBlocks.length ? textBlocks[textBlocks.length - 1].text : '';
+        claudeJson = extraerJSON(rawText);
+      } else {
+        console.warn('agent sendMessage: Claude HTTP', r.status);
+      }
+    } catch (e) {
+      console.warn('agent sendMessage: Claude fetch fail', e);
+    }
+
     hideTyping();
-    if(!r.ok){ addMessage('agent', `❌ Error: ${data?.error?.message || 'Sin conexión'}`); return; }
-    const tb = data.content?.find(b => b.type === 'text');
-    const raw = (tb?.text || '').replace(/```json|```/g, '').trim();
-    let parsed;
-    try{ parsed = JSON.parse(raw); }
-    catch{ addMessage('agent', raw || 'No encontré resultados.'); return; }
+
+    let intro, seleccionados, final;
+    if(claudeJson && typeof claudeJson === 'object'){
+      intro = claudeJson.mensaje_intro || 'Encontré estos resultados:';
+      seleccionados = Array.isArray(claudeJson.seleccionados) ? claudeJson.seleccionados : [];
+      final = claudeJson.mensaje_final || '';
+    } else {
+      intro = 'Encontré estos productos. El análisis detallado no está disponible ahora.';
+      seleccionados = null;
+      final = '';
+    }
+
+    const cardsHtml = renderCards(amazonProds, seleccionados);
     const now = new Date().toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' });
+    const finalHtml = final ? `<div class="msg-bubble" style="margin-top:10px">${escapeHtml(final)}</div>` : '';
+
     addMessage(
       'agent',
-      `<div class="msg agent"><div class="msg-bubble">${parsed.mensaje_intro || 'Encontré estos resultados:'}</div>${renderCards(parsed.productos)}${parsed.mensaje_final ? `<div class="msg-bubble" style="margin-top:10px">${parsed.mensaje_final}</div>` : ''}<div class="msg-time">${now}</div></div>`,
+      `<div class="msg agent"><div class="msg-bubble">${escapeHtml(intro)}</div>${cardsHtml}${finalHtml}<div class="msg-time">${now}</div></div>`,
       true
     );
-  }catch(e){
+  } catch (e) {
+    console.warn('agent sendMessage: unexpected error', e);
     hideTyping();
-    addMessage('agent', '❌ Sin conexión. Intenta de nuevo.');
-  }finally{
+    addMessage('agent', '😵 Algo salió mal procesando tu búsqueda. Intenta de nuevo.');
+  } finally {
     isLoading = false;
     document.getElementById('send-btn').disabled = false;
   }
@@ -144,3 +271,4 @@ function initAgent(){
 window.useQuickPrompt = useQuickPrompt;
 window.sendMessage = sendMessage;
 window.initAgent = initAgent;
+window.precargarCalculadora = precargarCalculadora;

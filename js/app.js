@@ -20,6 +20,8 @@ async function fetchTRM(){
     if(valor > 3000 && valor < 6000){
       window.TraeloConfig.TRM = valor;
       console.log('TRM actualizada:', valor);
+      const el = document.getElementById('trm-display');
+      if(el) el.textContent = '$' + Math.round(valor).toLocaleString('es-CO') + ' COP / USD';
     }
   } catch (e) {
     console.warn('TRM fetch fallido, usando fallback:', window.TraeloConfig.TRM);
@@ -27,7 +29,6 @@ async function fetchTRM(){
 }
 
 async function init(){
-  await fetchTRM();
   try {
     await loadViews();
   } catch (err) {
@@ -42,6 +43,8 @@ async function init(){
       </div>`;
     return;
   }
+
+  await fetchTRM();
 
   window.initUI();
   window.initAgent();

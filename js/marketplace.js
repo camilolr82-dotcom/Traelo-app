@@ -49,7 +49,9 @@ async function buscarAmazon(query, limit = 5){
       url: p.product_url,
       asin: p.asin,
       rating: parseFloat(p.product_star_rating) || 0,
-      reviews: parseInt(p.product_num_ratings, 10) || 0
+      reviews: parseInt(p.product_num_ratings, 10) || 0,
+      is_best_seller: !!p.is_best_seller,
+      is_amazon_choice: !!p.is_amazon_choice
     };
   }).filter(p => p.precio_usd > 0);
 
