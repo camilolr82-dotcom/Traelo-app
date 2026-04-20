@@ -1,21 +1,21 @@
 /* Hero con buscador centrado */
 .home-search-hero{padding:32px 18px 20px;text-align:center;}
-.home-hero-title{font-family:'Sora',sans-serif;font-weight:800;font-size:24px;line-height:1.2;letter-spacing:-0.5px;margin-bottom:8px;}
+.home-hero-title{font-family:'Sora',sans-serif;font-weight:800;font-size:24px;line-height:1.2;letter-spacing:-0.5px;margin-bottom:8px;color:var(--text);}
 .home-hero-sub{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:20px;max-width:340px;margin-left:auto;margin-right:auto;}
 
 /* Box de buscador: input + cámara + search */
-.home-search-box{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:6px;transition:border-color .2s;}
-.home-search-box:focus-within{border-color:var(--accent);}
+.home-search-box{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:6px;transition:border-color .2s;}
+.home-search-box:focus-within{border-color:var(--text);}
 .home-search-input{flex:1;min-width:0;background:transparent;border:none;outline:none;padding:10px 4px 10px 12px;color:var(--text);font-size:15px;font-family:'Figtree',sans-serif;}
 .home-search-input::placeholder{color:var(--text-muted);}
-.home-camera-btn{width:40px;height:40px;border-radius:10px;background:var(--surface3);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;}
+.home-camera-btn{width:40px;height:40px;border-radius:10px;background:var(--surface2);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;color:var(--text-muted);}
 .home-camera-btn:active{transform:scale(.92);}
-.home-search-btn{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ff8c5a);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,53,.3);flex-shrink:0;}
+.home-search-btn{width:44px;height:44px;border-radius:10px;background:var(--accent);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-md);flex-shrink:0;}
 .home-search-btn:active{transform:scale(.92);}
 
 /* Estado vacío */
 .home-empty{padding:60px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;}
-.home-empty-icon{font-size:52px;opacity:.4;}
+.home-empty-icon{font-size:52px;opacity:.3;}
 .home-empty-text{font-size:13px;color:var(--text-muted);line-height:1.5;max-width:280px;}
 
 /* Estado cargando */
@@ -28,20 +28,21 @@
 .home-results{padding:12px 18px 80px;}
 .home-results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding:0 4px;gap:10px;}
 .home-results-count{font-size:12px;color:var(--text-muted);flex-shrink:0;}
-.home-results-query{font-family:'Sora',sans-serif;font-weight:600;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.home-results-query{font-family:'Sora',sans-serif;font-weight:600;font-size:14px;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* Card horizontal estilo listado */
 .home-product-list{display:flex;flex-direction:column;gap:12px;}
-.home-product-card{display:flex;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px;cursor:pointer;transition:border-color .15s,transform .15s;}
-.home-product-card:active{transform:scale(.98);border-color:var(--accent);}
+.home-product-card{display:flex;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px;cursor:pointer;transition:border-color .15s,transform .15s;box-shadow:var(--shadow-sm);}
+.home-product-card:active{transform:scale(.98);border-color:var(--text);}
 .home-product-img{width:100px;height:100px;flex-shrink:0;border-radius:10px;background:var(--surface2);object-fit:contain;}
 .home-product-body{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0;}
-.home-product-rank{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:white;font-family:'Sora',sans-serif;font-size:11px;font-weight:800;margin-bottom:4px;}
+.home-product-rank{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--text);color:white;font-family:'Sora',sans-serif;font-size:11px;font-weight:800;margin-bottom:4px;}
+.home-product-card:first-child .home-product-rank{background:var(--accent);}
 .home-product-title{font-size:13px;font-weight:600;line-height:1.35;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .home-product-rating{font-size:11px;color:var(--text-muted);}
-.home-product-rating .stars{color:#FFD166;letter-spacing:1px;}
+.home-product-rating .stars{color:var(--yellow);letter-spacing:1px;}
 .home-product-pricing{margin-top:auto;display:flex;flex-direction:column;gap:2px;}
-.home-product-usd{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:var(--accent);}
+.home-product-usd{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
 .home-product-cop{font-size:12px;color:var(--text-muted);}
 
 /* Error */
@@ -49,5 +50,5 @@
 .home-error-text{font-size:13px;color:var(--red);}
 
 /* Utilidades compartidas con otras vistas — NO mover: pedidos.html usa .section-title, calc.html + cuenta.html usan .spacer */
-.section-title{font-family:'Sora',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.3px;}
+.section-title{font-family:'Sora',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.3px;color:var(--text);}
 .spacer{height:20px;}
