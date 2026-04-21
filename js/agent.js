@@ -1,3 +1,4 @@
+// DEPRECATED 2026-04-20: reemplazado por Home unificado. Mantener archivo por si se requiere revivir.
 let isLoading = false;
 
 function useQuickPrompt(el){
@@ -34,7 +35,16 @@ function hideTyping(){
 }
 
 function escapeHtml(s){
-  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  if(s == null) return '';
+  const txt = document.createElement('textarea');
+  txt.innerHTML = String(s);
+  const decoded = txt.value;
+  return decoded
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function precargarCalculadora(precioUsd){
@@ -261,7 +271,7 @@ function initAgent(){
       if(e.key === 'Enter' && this.value.trim()){
         chatInput.value = this.value.trim();
         this.value = '';
-        window.switchTab('agent');
+        window.switchTab('home'); // DEPRECATED — tab removed
         sendMessage();
       }
     });

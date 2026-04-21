@@ -92,7 +92,7 @@ function calcular(){
     </div>
     ${ahorroHTML}
     <div class="cta-row">
-      <button class="cta-btn primary" onclick="switchTab('agent')">🤖 Buscar con el agente</button>
+      <button class="cta-btn primary" onclick="switchTab('home')">Buscar productos</button>
       <button class="cta-btn ghost" onclick="compartir(${totalCOP},${pUSD})">📤 Compartir</button>
     </div>`;
 }

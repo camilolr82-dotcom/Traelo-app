@@ -1,39 +1,39 @@
 <div class="view" id="view-calc">
   <div class="calc-view">
     <div class="calc-hero">
-      <div class="calc-hero-tag">🧮 Calculadora de envío</div>
+      <div class="calc-hero-tag"><i data-lucide="calculator"></i> Calculadora de envío</div>
       <h2>¿Cuánto te cuesta<br>puesto en Colombia?</h2>
       <p>Precio + flete + arancel + fee Traelo — todo en COP.</p>
     </div>
 
     <!-- Paso 1: Categoría -->
     <div class="form-card">
-      <div class="form-card-title"><span>1️⃣</span> Categoría del producto</div>
+      <div class="form-card-title"><span>1</span> Categoría del producto</div>
       <div class="cat-grid">
-        <div class="cat-option selected" data-arancel="15" onclick="selectCat(this)"><div class="cat-option-icon">💻</div><div class="cat-option-label">Electrónica</div></div>
-        <div class="cat-option" data-arancel="40" onclick="selectCat(this)"><div class="cat-option-icon">👟</div><div class="cat-option-label">Ropa y Zapatos</div></div>
-        <div class="cat-option" data-arancel="10" onclick="selectCat(this)"><div class="cat-option-icon">💊</div><div class="cat-option-label">Suplementos</div></div>
-        <div class="cat-option" data-arancel="0" onclick="selectCat(this)"><div class="cat-option-icon">📚</div><div class="cat-option-label">Libros</div></div>
-        <div class="cat-option" data-arancel="10" onclick="selectCat(this)"><div class="cat-option-icon">🏠</div><div class="cat-option-label">Hogar</div></div>
-        <div class="cat-option" data-arancel="15" onclick="selectCat(this)"><div class="cat-option-icon">🎮</div><div class="cat-option-label">Gaming</div></div>
-        <div class="cat-option" data-arancel="15" onclick="selectCat(this)"><div class="cat-option-icon">🧴</div><div class="cat-option-label">Belleza</div></div>
-        <div class="cat-option" data-arancel="15" onclick="selectCat(this)"><div class="cat-option-icon">📦</div><div class="cat-option-label">Otros</div></div>
+        <div class="cat-option selected" data-cat="electronica" data-arancel="15" onclick="selectCat(this)"><div class="cat-option-icon"><i data-lucide="laptop"></i></div><div class="cat-option-label">Electrónica</div></div>
+        <div class="cat-option" data-cat="ropa" data-arancel="40" onclick="selectCat(this)"><div class="cat-option-icon"><i data-lucide="shirt"></i></div><div class="cat-option-label">Ropa y Zapatos</div></div>
+        <div class="cat-option" data-cat="suplementos" data-arancel="10" onclick="selectCat(this)"><div class="cat-option-icon"><i data-lucide="pill"></i></div><div class="cat-option-label">Suplementos</div></div>
+        <div class="cat-option" data-cat="libros" data-arancel="0" onclick="selectCat(this)"><div class="cat-option-icon"><i data-lucide="book-open"></i></div><div class="cat-option-label">Libros</div></div>
+        <div class="cat-option" data-cat="hogar" data-arancel="10" onclick="selectCat(this)"><div class="cat-option-icon"><i data-lucide="home"></i></div><div class="cat-option-label">Hogar</div></div>
+        <div class="cat-option" data-cat="gaming" data-arancel="15" onclick="selectCat(this)"><div class="cat-option-icon"><i data-lucide="gamepad-2"></i></div><div class="cat-option-label">Gaming</div></div>
+        <div class="cat-option" data-cat="belleza" data-arancel="15" onclick="selectCat(this)"><div class="cat-option-icon"><i data-lucide="sparkles"></i></div><div class="cat-option-label">Belleza</div></div>
+        <div class="cat-option" data-cat="otros" data-arancel="15" onclick="selectCat(this)"><div class="cat-option-icon"><i data-lucide="package"></i></div><div class="cat-option-label">Otros</div></div>
       </div>
       <div class="arancel-info">
-        <div class="arancel-info-title">📋 Aranceles Colombia</div>
-        <div class="arancel-row"><span>💻 Electrónica</span><span class="arancel-pct">15%</span></div>
-        <div class="arancel-row"><span>👟 Ropa y Zapatos</span><span class="arancel-pct">40%</span></div>
-        <div class="arancel-row"><span>💊 Suplementos</span><span class="arancel-pct">10%</span></div>
-        <div class="arancel-row"><span>📚 Libros</span><span class="arancel-pct">0%</span></div>
-        <div class="arancel-row"><span>🏠 Hogar</span><span class="arancel-pct">10%</span></div>
-        <div class="arancel-row"><span>🎮 Gaming</span><span class="arancel-pct">15%</span></div>
-        <div class="arancel-row"><span>🧴 Belleza</span><span class="arancel-pct">15%</span></div>
+        <div class="arancel-info-title">Aranceles Colombia</div>
+        <div class="arancel-row"><span><i data-lucide="laptop"></i> Electrónica</span><span class="arancel-pct">15%</span></div>
+        <div class="arancel-row"><span><i data-lucide="shirt"></i> Ropa y Zapatos</span><span class="arancel-pct">40%</span></div>
+        <div class="arancel-row"><span><i data-lucide="pill"></i> Suplementos</span><span class="arancel-pct">10%</span></div>
+        <div class="arancel-row"><span><i data-lucide="book-open"></i> Libros</span><span class="arancel-pct">0%</span></div>
+        <div class="arancel-row"><span><i data-lucide="home"></i> Hogar</span><span class="arancel-pct">10%</span></div>
+        <div class="arancel-row"><span><i data-lucide="gamepad-2"></i> Gaming</span><span class="arancel-pct">15%</span></div>
+        <div class="arancel-row"><span><i data-lucide="sparkles"></i> Belleza</span><span class="arancel-pct">15%</span></div>
       </div>
     </div>
 
     <!-- Paso 2: Precio -->
     <div class="form-card">
-      <div class="form-card-title"><span>2️⃣</span> Precio del producto</div>
+      <div class="form-card-title"><span>2</span> Precio del producto</div>
       <div class="trm-row">
         <span class="trm-label">TRM de referencia</span>
         <span class="trm-value" id="trm-display">$4.100 COP / USD</span>
@@ -54,7 +54,7 @@
 
     <!-- Paso 3: Peso -->
     <div class="form-card">
-      <div class="form-card-title"><span>3️⃣</span> Peso y dimensiones</div>
+      <div class="form-card-title"><span>3</span> Peso y dimensiones</div>
       <div class="input-row two-col">
         <div class="field-group">
           <div class="field-label">Peso real (lb)</div>
@@ -68,7 +68,7 @@
         </div>
       </div>
       <div class="vol-toggle" onclick="toggleVol()">
-        <span class="vol-toggle-label">📐 Incluir peso volumétrico</span>
+        <span class="vol-toggle-label">Incluir peso volumétrico</span>
         <div class="toggle-switch" id="vol-toggle-sw"></div>
       </div>
       <div class="vol-fields" id="vol-fields">
@@ -86,14 +86,14 @@
             <input class="field-input" type="number" id="alto" placeholder="0" min="0" oninput="calcular()"/>
           </div>
         </div>
-        <div class="field-unit" style="margin-top:6px">📦 Se cobra el mayor peso. Fórmula: (L×W×H) ÷ 139</div>
+        <div class="field-unit" style="margin-top:6px">Se cobra el mayor peso. Fórmula: (L×W×H) ÷ 139</div>
       </div>
     </div>
 
     <!-- Resultado -->
     <div id="resultado-section">
       <div class="calc-empty">
-        <div class="calc-empty-icon">🧮</div>
+        <div class="calc-empty-icon"><i data-lucide="calculator"></i></div>
         <div class="calc-empty-text">Ingresa el precio y el peso para ver el costo total puesto en Colombia</div>
       </div>
     </div>

@@ -10,6 +10,7 @@
 .casillero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);}
 .icon-btn{width:36px;height:36px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-muted);font-size:16px;}
 .icon-btn:active{transform:scale(.92);}
+.icon-btn svg{width:18px;height:18px;stroke-width:2;}
 .search-bar{display:flex;align-items:center;gap:10px;}
 .search-input-wrap{flex:1;position:relative;}
 .search-input-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;}
@@ -28,7 +29,9 @@
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--nav-h);background:rgba(255,255,255,0.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;align-items:center;z-index:100;padding:0 6px;padding-bottom:env(safe-area-inset-bottom,0px);}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;padding:8px 4px;border-radius:12px;position:relative;}
 .nav-item:active{background:var(--surface2);}
-.nav-icon{font-size:22px;}
+.nav-icon{font-size:22px;display:flex;align-items:center;justify-content:center;}
+.nav-icon svg{width:22px;height:22px;stroke-width:2;color:var(--text-muted);}
+.nav-item.active .nav-icon svg{color:var(--accent);}
 .nav-label{font-size:10px;font-weight:600;color:var(--text-muted);letter-spacing:.2px;}
 .nav-item.active .nav-label{color:var(--accent);}
 .nav-dot{position:absolute;top:4px;right:18px;width:7px;height:7px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);}

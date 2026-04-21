@@ -29,15 +29,8 @@
     </div>
     <div class="header-actions">
       <div class="casillero-badge">COL-2847</div>
-      <div class="icon-btn" onclick="showToast('🔔 Sin notificaciones nuevas')">🔔</div>
+      <div class="icon-btn" onclick="showToast('🔔 Sin notificaciones nuevas')"><i data-lucide="bell"></i></div>
     </div>
-  </div>
-  <div class="search-bar">
-    <div class="search-input-wrap">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input class="search-input" placeholder="Buscar producto o pedirle al agente..." id="search-input"/>
-    </div>
-    <button class="agent-trigger-btn" onclick="switchTab('agent')">🤖</button>
   </div>
 </header>
 
@@ -46,11 +39,10 @@
 </main>
 
 <nav class="bottom-nav">
-  <div class="nav-item active" id="nav-home" onclick="switchTab('home')"><div class="nav-icon">🏠</div><div class="nav-label">Inicio</div></div>
-  <div class="nav-item" id="nav-agent" onclick="switchTab('agent')"><div class="nav-icon">🤖</div><div class="nav-label">Agente</div><div class="nav-dot"></div></div>
-  <div class="nav-item" id="nav-calc" onclick="switchTab('calc')"><div class="nav-icon">🧮</div><div class="nav-label">Calcular</div></div>
-  <div class="nav-item" id="nav-pedidos" onclick="switchTab('pedidos')"><div class="nav-icon">📦</div><div class="nav-label">Pedidos</div></div>
-  <div class="nav-item" id="nav-cuenta" onclick="switchTab('cuenta')"><div class="nav-icon">👤</div><div class="nav-label">Yo</div></div>
+  <div class="nav-item active" id="nav-home" onclick="switchTab('home')"><div class="nav-icon"><i data-lucide="home"></i></div><div class="nav-label">Inicio</div></div>
+  <div class="nav-item" id="nav-calc" onclick="switchTab('calc')"><div class="nav-icon"><i data-lucide="calculator"></i></div><div class="nav-label">Calcular</div></div>
+  <div class="nav-item" id="nav-pedidos" onclick="switchTab('pedidos')"><div class="nav-icon"><i data-lucide="package"></i></div><div class="nav-label">Pedidos</div></div>
+  <div class="nav-item" id="nav-cuenta" onclick="switchTab('cuenta')"><div class="nav-icon"><i data-lucide="user"></i></div><div class="nav-label">Yo</div></div>
 </nav>
 
 <div class="modal-overlay" id="api-modal">
@@ -81,7 +73,7 @@
 <script src="js/home.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/calc.js"></script>
-<script src="js/agent.js"></script>
 <script src="js/app.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </body>
 </html>

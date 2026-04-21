@@ -1,4 +1,4 @@
-const VIEWS = ['home', 'agent', 'calc', 'pedidos', 'cuenta'];
+const VIEWS = ['home', 'calc', 'pedidos', 'cuenta'];
 
 async function loadViews(){
   const main = document.querySelector('.main');
@@ -47,15 +47,18 @@ async function init(){
   await fetchTRM();
 
   window.initUI();
-  window.initAgent();
 
   if(window.Home && typeof window.Home.init === 'function'){
     window.Home.init();
   }
 
+  if(window.lucide && typeof window.lucide.createIcons === 'function'){
+    window.lucide.createIcons();
+  }
+
   const apiKey = localStorage.getItem('traelo_api_key') || '';
-  if(apiKey) window.showToast('✅ Agente listo');
-  else setTimeout(() => window.showToast('🔑 Activa el agente en "Yo"'), 1200);
+  if(apiKey) window.showToast('✅ Listo para buscar');
+  else setTimeout(() => window.showToast('🔑 Activa tus claves API en "Yo"'), 1200);
 }
 
 window.addEventListener('DOMContentLoaded', init);
